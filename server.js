@@ -1,6 +1,3 @@
-/**
- * FIXME: do we need to sanitize anything?
- */
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
