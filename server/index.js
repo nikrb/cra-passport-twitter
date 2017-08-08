@@ -15,10 +15,11 @@ MongoClient.connect(url, function(err, db) {
   app.set('port', (process.env.port || 8080));
   app.use('/', express.static(process.cwd() + '/public'));
 
-
-  app.get( '/', (req,res) => {
-    res.sendFile( process.cwd() + '/public/index.html');
-  });
+  // FIXME: this does nothing
+  // app.get( '/', (req,res) => {
+  //   console.log( "send index.html");
+  //   res.sendFile( process.cwd() + '/public/index.html');
+  // });
 
 
   app.listen(app.get('port'), () => {
