@@ -15,12 +15,6 @@ MongoClient.connect(url, function(err, db) {
   app.set('port', (process.env.port || 8080));
   app.use('/', express.static(process.cwd() + '/public'));
 
-  // FIXME: this does nothing
-  // app.get( '/', (req,res) => {
-  //   console.log( "send index.html");
-  //   res.sendFile( process.cwd() + '/public/index.html');
-  // });
-
 
   app.listen(app.get('port'), () => {
     console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
