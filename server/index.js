@@ -1,22 +1,28 @@
 const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectID;
-const app = express();
 const bodyParser = require('body-parser');
+const passport = require( 'passport');
+require( 'dotenv').config();
+require( './server/models').connect( process.env.dbUri);
+const app = express();
 
-var url = 'mongodb://localhost:27017/recipes';
-MongoClient.connect(url, function(err, db) {
-  if( err){
-    throw new Error( "mongo connect failed");
-  } else {
-    console.log( "connected to db");
-  }
+app.set('port', (process.env.port || 8080));
+app.use('/', express.static(process.cwd() + '/public'));
+app.use( bodyParser.urlencoded( {extended: false}));
+app.use( passport.initialize());
 
-  app.set('port', (process.env.port || 8080));
-  app.use('/', express.static(process.cwd() + '/public'));
+const localSignupStrategy = require('./server/passport/local-signup');
+const localLoginStrategy = require('./server/passport/local-login');
+passport.use('local-signup', localSignupStrategy);
+passport.use('local-login', localLoginStrategy);
 
+const authCheckMiddleware = require('./server/middleware/auth-check');
+app.use('/api', authCheckMiddleware);
 
-  app.listen(app.get('port'), () => {
-    console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
-  });
+const authRoutes = require('./server/routes/auth');
+const apiRoutes = require('./server/routes/api');
+app.use('/auth', authRoutes);
+app.use('/api', apiRoutes);
+
+app.listen(app.get('port'), () => {
+  console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
 });
