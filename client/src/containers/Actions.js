@@ -46,5 +46,5 @@ function parseJSON(response) {
   return response.json();
 }
 
-const Actions = { getAll, updateRecipe, deleteRecipe, syncBackend};
+const Actions = { postSignup, postLogin};
 export default Actions;
