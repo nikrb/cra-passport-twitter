@@ -15,7 +15,7 @@ export default class LoginForm extends React.Component {
     return (
       <div className="container" >
         <form action="/" onSubmit={onSubmit} >
-          <h2>Sign Up</h2>
+          <h2>Login</h2>
           {errors.summary && <p className="error-message">{errors.summary}</p>}
           <label>Email
             <input type="text" name="email"
