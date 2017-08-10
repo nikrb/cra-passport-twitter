@@ -10,15 +10,15 @@ validateSignupForm = (payload) => {
   // FIXME: validate email format, password length (and contents?)
   if( !payload || typeof payload.email !== "String"){
     is_valid = false;
-    error.email = "Please provide a valid email";
+    errors.email = "Please provide a valid email";
   }
   if( !payload || typeof payload.password !== "String"){
     is_valid = false;
-    error.password = "Please provide a valid password";
+    errors.password = "Please provide a valid password";
   }
   if( !payload || typeof payload.name !== "String" || payload.name.trim().length() === 0){
     is_valid = false;
-    error.email = "Please provide a valid name";
+    errors.email = "Please provide a valid name";
   }
   if( !is_valid) message = "Check the form for errors";
   return { success: is_valid, message, errors};
@@ -31,11 +31,11 @@ validateLoginForm = (payload) => {
     // FIXME: validate email format, password length (and contents?)
     if( !payload || typeof payload.email !== "String"){
       is_valid = false;
-      error.email = "Please provide your email address";
+      errors.email = "Please provide your email address";
     }
     if( !payload || typeof payload.password !== "String"){
       is_valid = false;
-      error.password = "Please provide your password";
+      errors.password = "Please provide your password";
     }
     if( !is_valid) message = "Check the form for errors";
     return { success: is_valid, message, errors};
