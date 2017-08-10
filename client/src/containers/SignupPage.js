@@ -33,7 +33,7 @@ export default class SignupPage extends React.Component {
       // this.context.router.replace('/login');
     })
     .catch( (err) => {
-      console.log( "signup errors:", err);
+      console.error( "signup errors:", err);
     });
   };
   render = () => {
