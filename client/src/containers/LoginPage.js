@@ -24,8 +24,7 @@ export default class LoginPage extends React.Component {
     .then( (response) => {
       this.setState( { errors: {}});
       console.log( "login response:", response);
-
-        Auth.authenticateUser(xhr.response.token);
+      Auth.authenticateUser( response.token);
     })
     .catch( (err) => {
       console.error( "login failed:", err);
