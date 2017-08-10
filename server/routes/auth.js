@@ -8,17 +8,18 @@ validateSignupForm = (payload) => {
   let is_valid = true;
   let message = "";
   // FIXME: validate email format, password length (and contents?)
-  if( !payload || typeof payload.email !== "String"){
+  if( !payload || typeof payload.email !== "string"){
+    console.log( "email type:", typeof payload.email);
     is_valid = false;
     errors.email = "Please provide a valid email";
   }
-  if( !payload || typeof payload.password !== "String"){
+  if( !payload || typeof payload.password !== "string"){
     is_valid = false;
     errors.password = "Please provide a valid password";
   }
-  if( !payload || typeof payload.name !== "String" || payload.name.trim().length() === 0){
+  if( !payload || typeof payload.name !== "string" || payload.name.trim().length === 0){
     is_valid = false;
-    errors.email = "Please provide a valid name";
+    errors.name = "Please provide a valid name";
   }
   if( !is_valid) message = "Check the form for errors";
   return { success: is_valid, message, errors};
@@ -29,11 +30,11 @@ validateLoginForm = (payload) => {
     let is_valid = true;
     let message = "";
     // FIXME: validate email format, password length (and contents?)
-    if( !payload || typeof payload.email !== "String"){
+    if( !payload || typeof payload.email !== "string"){
       is_valid = false;
       errors.email = "Please provide your email address";
     }
-    if( !payload || typeof payload.password !== "String"){
+    if( !payload || typeof payload.password !== "string"){
       is_valid = false;
       errors.password = "Please provide your password";
     }
