@@ -20,10 +20,10 @@ export default class LoginPage extends React.Component {
     event.preventDefault();
     const {email, password} = this.state.user;
     console.log( `email:[${email}] password:[${password}]`);
-    Actions.postLogin( this.state.user)
+    Actions.postLogin( {email, password})
     .then( (response) => {
-      this.setState( { errors: {}});
       console.log( "login response:", response);
+      this.setState( { errors: {}});
       Auth.authenticateUser( response.token);
     })
     .catch( (err) => {
