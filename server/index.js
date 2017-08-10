@@ -5,7 +5,7 @@ require( 'dotenv').config();
 require( './models').connect( process.env.dbUri);
 const app = express();
 
-app.set('port', (process.env.port || 8080));
+app.set('port', (process.env.port || 8081));
 app.use('/', express.static(process.cwd() + '/public'));
 app.use( bodyParser.urlencoded( {extended: false}));
 app.use( passport.initialize());
