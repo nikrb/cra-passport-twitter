@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from '../components/LoginForm';
+import Actions from './Actions';
+import Auth from '../modules/Auth';
 
 export default class LoginPage extends React.Component {
   state = {
@@ -18,6 +20,16 @@ export default class LoginPage extends React.Component {
     event.preventDefault();
     const {email, password} = this.state.user;
     console.log( `email:[${email}] password:[${password}]`);
+    Actions.postLogin( this.state.user)
+    .then( (response) => {
+      this.setState( { errors: {}});
+      console.log( "login response:", response);
+
+        Auth.authenticateUser(xhr.response.token);
+    })
+    .catch( (err) => {
+      console.error( "login failed:", err);
+    });
   };
   render = () => {
     return (

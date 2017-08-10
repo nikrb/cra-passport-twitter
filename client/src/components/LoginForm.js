@@ -11,6 +11,7 @@ export default class LoginForm extends React.Component {
   };
   render = () => {
     const {onSubmit,onChange,user,errors} = this.props;
+    // TODO: show signup success
     return (
       <div className="container" >
         <form action="/" onSubmit={onSubmit} >
