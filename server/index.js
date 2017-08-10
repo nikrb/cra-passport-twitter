@@ -7,7 +7,7 @@ const app = express();
 
 app.set('port', (process.env.port || 8081));
 app.use('/', express.static(process.cwd() + '/public'));
-app.use( bodyParser.urlencoded( {extended: false}));
+app.use( bodyParser.json());
 app.use( passport.initialize());
 
 const localSignupStrategy = require('./passport/local-signup');
