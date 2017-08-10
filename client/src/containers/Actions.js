@@ -9,10 +9,7 @@ function postSignup( payload){
     body: JSON.stringify( payload)
   })
   .then( checkStatus)
-  .then( parseJSON)
-  .then( function( response){
-    console.log( "post signup response:", response);
-  });
+  .then( parseJSON);
 }
 
 function postLogin(payload){
@@ -25,10 +22,7 @@ function postLogin(payload){
     body: JSON.stringify( payload)
   })
   .then( checkStatus)
-  .then( parseJSON)
-  .then( function( response){
-    console.log( "post login response:", response);
-  });
+  .then( parseJSON);
 }
 
 function checkStatus(response) {
