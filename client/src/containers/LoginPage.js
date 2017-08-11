@@ -34,6 +34,11 @@ export default class LoginPage extends React.Component {
     })
     .catch( (err) => {
       console.error( "login failed:", err);
+      err.response.json().then( (res) => {
+        console.log( res);
+        const ne = { ...res.errors, summary: res.message};
+        this.setState( { errors: ne});
+      });
     });
   };
   render = () => {
