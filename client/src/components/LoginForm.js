@@ -20,10 +20,12 @@ export default class LoginForm extends React.Component {
           <label>Email
             <input type="text" name="email"
               value={user.email} onChange={onChange} />
+            {errors.email && <p className="error-message">{errors.email}</p>}
           </label>
           <label>Password
             <input type="password" name="password"
               value={user.password} onChange={onChange} />
+            {errors.password && <p className="error-message">{errors.password}</p>}
           </label>
           <div>
             <button type="submit" >Login</button>
