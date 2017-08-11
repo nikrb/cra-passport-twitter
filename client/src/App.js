@@ -8,6 +8,19 @@ import Profile from './containers/ProfilePage';
 import Auth from './modules/Auth';
 
 export default class App extends Component {
+  state = {
+    is_logged_in : Auth.isUserAuthenticated()
+  };
+
+  logout = () => {
+    Auth.deauthenticateUser();
+    this.setState( {is_logged_in: false});
+  };
+  // FIXME: this is horrible right?
+  login = () => {
+    this.setState( {is_logged_in: true});
+  };
+
   render() {
     return (
       <Router>
@@ -16,15 +29,19 @@ export default class App extends Component {
             <ul>
               <li><Link to="/">Home</Link></li>
               <li><Link to="/profile">Profile</Link></li>
-              <li><Link to="/login">Login</Link></li>
-              <li><Link to="/signup">Signup</Link></li>
+              { Auth.isUserAuthenticated()?
+                <li onClick={this.logout}>Logout</li>:
+                <li><Link to="/login">Login</Link></li>
+              }
+              { Auth.isUserAuthenticated()?"":<li><Link to="/signup">Signup</Link></li> }
             </ul>
           </div>
 
           <hr/>
 
           <Route exact path="/" component={HomePage}/>
-          <Route path="/login" component={LoginPage} />
+          <Route path="/login" render={props=>
+              <LoginPage {...props} onLogin={this.login} />} />
           <Route path="/signup" component={SignupPage} />
           <AuthRoute path="/profile" component={Profile} />
         </div>
