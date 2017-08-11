@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {Redirect} from 'react-router-dom';
 import SignupForm from '../components/SignupForm';
 import Actions from './Actions';
 
@@ -10,7 +10,8 @@ export default class SignupPage extends React.Component {
       email: "",
       name: "",
       password: ""
-    }
+    },
+    redirectToReferrer: false
   };
   changeUser = ( event) => {
     // event target name, not user name!
@@ -25,18 +26,26 @@ export default class SignupPage extends React.Component {
     console.log( `name:[${name}] email:[${email}] password:[${password}]`);
     Actions.postSignup( this.state.user)
     .then( (response) => {
-      this.setState( {errors: {}});
+      this.setState( {errors: {}, redirectToReferrer: true});
       console.log( "signup page post response:", response);
-      // FIXME: use props
-      // don't like this at all
-      // localStorage.setItem( 'successmessage', response.message);
-      // this.context.router.replace('/login');
     })
     .catch( (err) => {
-      console.error( "signup errors:", err);
+      // FIXME: this can't be right
+      err.response.json().then( (res) => {
+        console.log( res);
+        const ne = { ...res.errors, summary: res.message};
+        this.setState( { errors: ne});
+      });
     });
   };
   render = () => {
+    // not referer, always login
+    const { redirectToReferrer } = this.state;
+    if (redirectToReferrer) {
+      return (
+        <Redirect to="/login"/>
+      );
+    }
     return (
       <SignupForm onSubmit={this.processForm} onChange={this.changeUser}
         user={this.state.user} errors={this.state.errors} />
