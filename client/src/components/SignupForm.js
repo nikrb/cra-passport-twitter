@@ -22,19 +22,21 @@ export default class SignupForm extends React.Component {
             {errors.name && <p className="error-message">{errors.name}</p>}
           </label>
           <label>Email
-            <input type="text" name="email"
-              value={user.email} onChange={onChange} />
-            {errors.email && <p className="error-message">{errors.email}</p>}
+            <div className="error-wrap">
+              {errors.email && <div className="error-field">{errors.email}</div>}
+              <input type="text" name="email"
+                value={user.email} onChange={onChange} />
+            </div>
           </label>
           <label>Password
             <input type="password" name="password"
               value={user.password} onChange={onChange} />
             {errors.password && <p className="error-message">{errors.password}</p>}
           </label>
-          <div>
+          <div style={{margin:"10px"}}>
             <button type="submit" >Create New Account</button>
           </div>
-          <div>
+          <div style={{fontSize:"12px",textAlign:"center"}}>
             Already have an account? <Link to={"/login"}>Log in</Link>
           </div>
         </form>
