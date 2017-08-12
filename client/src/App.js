@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch, NavLink } from 'react-router-dom';
 import './App.css';
 import HomePage from './components/HomePage';
 import LoginPage from './containers/LoginPage';
@@ -27,23 +27,31 @@ export default class App extends Component {
         <div>
           <div className="nav">
             <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/profile">Profile</Link></li>
-              { Auth.isUserAuthenticated()?
-                <li onClick={this.logout}>Logout</li>:
-                <li><Link to="/login">Login</Link></li>
-              }
-              { Auth.isUserAuthenticated()?"":<li><Link to="/signup">Signup</Link></li> }
+              <div className="nav-box">
+                <li><NavLink to="/" exact>Home</NavLink></li>
+                <li><NavLink to="/profile" exact>Profile</NavLink></li>
+              </div>
+              <div className="nav-box">
+                { Auth.isUserAuthenticated()?
+                  <li onClick={this.logout}>Logout</li>:
+                  <li><NavLink to="/login" exact>Login</NavLink></li>
+                }
+                { Auth.isUserAuthenticated()?"":
+                  <li><NavLink to="/signup" exact>Signup</NavLink></li>
+                }
+              </div>
             </ul>
           </div>
 
           <hr/>
-
-          <Route exact path="/" component={HomePage}/>
-          <Route path="/login" render={props=>
-              <LoginPage {...props} onLogin={this.login} />} />
-          <Route path="/signup" component={SignupPage} />
-          <AuthRoute path="/profile" component={Profile} />
+          <Switch>
+            <Route exact path="/" component={HomePage}/>
+            <Route path="/login" render={props=>
+                <LoginPage {...props} onLogin={this.login} />} />
+            <Route path="/signup" component={SignupPage} />
+            <AuthRoute path="/profile" component={Profile} />
+            <Route path="*" render={props => <Redirect to='/' {...props} /> } />
+          </Switch>
         </div>
       </Router>
     );
