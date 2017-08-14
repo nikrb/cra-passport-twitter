@@ -5,8 +5,28 @@ require( 'dotenv').config();
 require( './models').connect( process.env.dbUri);
 const app = express();
 
-app.set('port', (process.env.port || 8081));
-app.use('/', express.static(process.cwd() + '/public'));
+// cloud9 requires port 8080
+var port = 8081;
+if( process.env.NODE_ENV === 'production'){
+  console.log( "production environment");
+  port = 8080;
+} else {
+  // react-scripts starts dev server up on 3000
+  console.log( "development environment");
+}
+
+app.set('port', port); // (process.env.port || 8080));
+// app.use('/', express.static(process.cwd() + '/public'));
+
+// Express only serves static assets in production
+if (process.env.NODE_ENV === 'production') {
+  app.use( '/', express.static('client/build'));
+
+  app.get('/', function (req, res) {
+    res.sendFile( 'client/build/index.html');
+  });
+}
+
 app.use( bodyParser.json());
 app.use( passport.initialize());
 
