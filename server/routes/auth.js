@@ -1,5 +1,7 @@
 const express = require( 'express');
+const jwt = require( 'jsonwebtoken');
 const passport = require( 'passport');
+const User = require( 'mongoose').model('User');
 
 const router = new express.Router();
 
@@ -37,6 +39,27 @@ validateLoginForm = (payload) => {
     if( !payload || typeof payload.password !== "string"){
       is_valid = false;
       errors.password = "Please provide your password";
+    }
+    if( !is_valid) message = "Check the form for errors";
+    return { success: is_valid, message, errors};
+};
+
+validatePasswordForm = (payload) => {
+    const errors = {};
+    let is_valid = true;
+    let message = "";
+    // FIXME: validate email format, password length (and contents?)
+    if( !payload || typeof payload.email !== "string"){
+      is_valid = false;
+      errors.email = "oops! We failed to find your account";
+    }
+    if( !payload || typeof payload.password !== "string"){
+      is_valid = false;
+      errors.password = "Please provide your password";
+    }
+    if( !payload || typeof payload.new_password !== "string"){
+      is_valid = false;
+      errors.new_password = "Please provide a new password";
     }
     if( !is_valid) message = "Check the form for errors";
     return { success: is_valid, message, errors};
@@ -94,7 +117,51 @@ router.post( '/login', ( req, res, next) => {
       success: true,
       message: "Login success",
       token,
-      user: userData
+      user: {name: userData.name}
+    });
+  })(req, res, next);
+});
+
+router.post( '/change', (req, res, next) => {
+  const valid = validatePasswordForm( req.body);
+  if( !valid.success){
+    const {errors, message} = valid;
+    return res.status( 400).json( {success:false, errors, message});
+  }
+  return passport.authenticate( 'local-login', ( err, token, userData) => {
+    if( err){
+      if (err.name === 'IncorrectCredentialsError') {
+        return res.status(400).json({
+          success: false,
+          message: err.message
+        });
+      }
+      return res.status(400).json({
+        success: false,
+        message: 'Incorrect username or password.'
+      });
+    }
+    User.findOne( {email: userData.email}, function( err, user){
+      if( err || !user){
+        console.error( "user count error:", err);
+        return res.status(400).json({ success:false, message: err.message});
+      } else {
+        user.password = req.body.new_password;
+        user.save( (err) => {
+          if( err){
+            console.error( "update user failed:", err);
+            return res.status( 400).json( {success:false, message: err.message});
+          }
+          const payload = { sub: user._id};
+          const token = jwt.sign( payload, process.env.jwtSecret);
+          return res.json( {
+            success: true,
+            message: "Change success",
+            token,
+            user: {name: user.name}
+          });
+        });
+      }
     });
   })(req, res, next);
 });
