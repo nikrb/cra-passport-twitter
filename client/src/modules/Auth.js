@@ -1,6 +1,7 @@
 const authenticateUser = ( user) => {
   localStorage.setItem( 'token', user.token);
   localStorage.setItem( 'name', user.name);
+  localStorage.setItem( 'email', user.email);
 };
 const isUserAuthenticated = () => {
   return localStorage.getItem( 'token') !== null;
@@ -15,6 +16,9 @@ const getToken = () => {
 const getUsername = () => {
   return localStorage.getItem( 'name');
 };
+const getEmail = () => {
+  return localStorage.getItem( 'email');
+};
 
 export default { authenticateUser, isUserAuthenticated, deauthenticateUser,
-                  getToken, getUsername};
+                  getToken, getUsername, getEmail};
