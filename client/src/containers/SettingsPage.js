@@ -24,7 +24,7 @@ export default class SettingsPage extends React.Component {
     .then( (response) => {
       console.log( "change password response:", response);
       Auth.authenticateUser( {token: response.token, name: response.user.name, email: email});
-      this.setState( { errors: {}});
+      this.setState( { errors: { summary: response.message }});
     })
     .catch( (err) => {
       console.error( "change password failed:", err);
