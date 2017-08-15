@@ -9,19 +9,30 @@ import Auth from './modules/Auth';
 
 export default class App extends Component {
   state = {
-    is_logged_in : Auth.isUserAuthenticated()
+    is_logged_in : Auth.isUserAuthenticated(),
+    user : {name:""}
   };
-
+  componentWillMount = () => {
+    if( Auth.isUserAuthenticated()){
+      const username = Auth.getUsername();
+      this.setState( { user : {name: username?username:""}});
+    }
+  };
   logout = () => {
     Auth.deauthenticateUser();
-    this.setState( {is_logged_in: false});
+    this.setState( {is_logged_in: false, user: {name:""}});
   };
   // FIXME: this is horrible right?
-  login = () => {
-    this.setState( {is_logged_in: true});
+  login = ( user) => {
+    // const bits = user.email.match( /(.*)[@\s-_].*$/);
+    this.setState( {is_logged_in: true, user: {name: user.name}});
   };
 
   render() {
+    const username = this.state.user.name;
+    const right_margin = {
+      marginRight: "10px"
+    };
     return (
       <Router>
         <div>
@@ -33,7 +44,11 @@ export default class App extends Component {
               </div>
               <div className="nav-box">
                 { Auth.isUserAuthenticated()?
-                  <li onClick={this.logout}>Logout</li>:
+                    <div className="nav-box">
+                      <li style={right_margin}>{this.state.user.name?`Hi ${username}`:""}</li>
+                      <li onClick={this.logout}>Logout</li>
+                    </div>
+                  :
                   <li><NavLink to="/login" exact>Login</NavLink></li>
                 }
                 { Auth.isUserAuthenticated()?"":

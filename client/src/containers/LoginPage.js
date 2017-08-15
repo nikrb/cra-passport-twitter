@@ -1,10 +1,14 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import LoginForm from '../components/LoginForm';
 import Actions from './Actions';
 import Auth from '../modules/Auth';
 
 export default class LoginPage extends React.Component {
+  static propTypes = {
+    onLogin: PropTypes.func.isRequired,
+  };
   state = {
     errors: {},
     user: { email: "", password:""},
@@ -28,9 +32,9 @@ export default class LoginPage extends React.Component {
     Actions.postLogin( {email, password})
     .then( (response) => {
       console.log( "login response:", response);
-      Auth.authenticateUser( response.token);
+      Auth.authenticateUser( {token: response.token, name: response.user.name});
       this.setState( { errors: {}, redirectToReferrer: true});
-      this.props.onLogin();
+      this.props.onLogin( {name: response.user.name});
     })
     .catch( (err) => {
       console.error( "login failed:", err);
