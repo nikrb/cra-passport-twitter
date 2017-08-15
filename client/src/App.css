@@ -16,6 +16,7 @@ label {
 .nav-box {
   display: flex;
   flex-direction: row;
+  align-items: baseline;
 }
 .nav {
   user-select: none;
