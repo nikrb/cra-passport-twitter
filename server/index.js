@@ -6,17 +6,9 @@ require( './models').connect( process.env.dbUri);
 const app = express();
 
 // cloud9 requires port 8080
-var port = 8081;
-if( process.env.NODE_ENV === 'production'){
-  console.log( "production environment");
-  port = 8080;
-} else {
-  // react-scripts starts dev server up on 3000
-  console.log( "development environment");
-}
-
-app.set('port', port); // (process.env.port || 8080));
-// app.use('/', express.static(process.cwd() + '/public'));
+// react-scripts start dev server on 3000 so we can have the backend api at 8080
+// for production we can run single server on 8080 and serve react bundle
+app.set('port', (process.env.port || 8080));
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
