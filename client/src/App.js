@@ -5,27 +5,28 @@ import HomePage from './components/HomePage';
 import LoginPage from './containers/LoginPage';
 import SignupPage from './containers/SignupPage';
 import Profile from './containers/ProfilePage';
+import SettingsPage from './containers/SettingsPage';
 import Auth from './modules/Auth';
 
 export default class App extends Component {
   state = {
     is_logged_in : Auth.isUserAuthenticated(),
-    user : {name:""}
+    user : {name:"", email:""}
   };
   componentWillMount = () => {
     if( Auth.isUserAuthenticated()){
       const username = Auth.getUsername();
-      this.setState( { user : {name: username?username:""}});
+      const email = Auth.getEmail();
+      this.setState( { user : {name: username?username:"", email: email?email:""}});
     }
   };
   logout = () => {
     Auth.deauthenticateUser();
-    this.setState( {is_logged_in: false, user: {name:""}});
+    this.setState( {is_logged_in: false, user: {name:"", email:""}});
   };
   // FIXME: this is horrible right?
   login = ( user) => {
-    // const bits = user.email.match( /(.*)[@\s-_].*$/);
-    this.setState( {is_logged_in: true, user: {name: user.name}});
+    this.setState( {is_logged_in: true, user: {name: user.name, email: user.email}});
   };
 
   render() {
@@ -46,6 +47,7 @@ export default class App extends Component {
                 { Auth.isUserAuthenticated()?
                     <div className="nav-box">
                       <li style={right_margin}>{this.state.user.name?`Hi ${username}`:""}</li>
+                      <li style={right_margin}><NavLink to='/settings' exact >&#x2699;</NavLink></li>
                       <li onClick={this.logout}>Logout</li>
                     </div>
                   :
@@ -65,6 +67,7 @@ export default class App extends Component {
                 <LoginPage {...props} onLogin={this.login} />} />
             <Route path="/signup" component={SignupPage} />
             <AuthRoute path="/profile" component={Profile} />
+            <AuthRoute path="/settings" component={SettingsPage} />
             <Route path="*" render={props => <Redirect to='/' {...props} /> } />
           </Switch>
         </div>
