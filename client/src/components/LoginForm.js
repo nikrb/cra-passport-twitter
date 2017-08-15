@@ -27,10 +27,10 @@ export default class LoginForm extends React.Component {
               value={user.password} onChange={onChange} />
             {errors.password && <p className="error-message">{errors.password}</p>}
           </label>
-          <div>
+          <div style={{margin:"10px"}}>
             <button type="submit" >Login</button>
           </div>
-          <div>
+          <div style={{fontSize:"12px",textAlign:"center"}}>
             Dont have an account? <Link to={"/signup"}>Sign Up</Link>
           </div>
         </form>
