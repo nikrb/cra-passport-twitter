@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch, NavLink } from 'react-router-dom';
 import './App.css';
-import HomePage from './components/HomePage';
+import HomePage from './containers/HomePage';
 import LoginPage from './containers/LoginPage';
 import SignupPage from './containers/SignupPage';
 import Profile from './containers/ProfilePage';
@@ -48,7 +48,7 @@ export default class App extends Component {
                     <div className="nav-box">
                       <li style={right_margin}>{this.state.user.name?`Hi ${username}`:""}</li>
                       <li style={right_margin}><NavLink to='/settings' exact >&#x2699;</NavLink></li>
-                      <li onClick={this.logout}>Logout</li>
+                      <li><a onClick={this.logout}>Logout</a></li>
                     </div>
                   :
                   <li><NavLink to="/login" exact>Login</NavLink></li>
