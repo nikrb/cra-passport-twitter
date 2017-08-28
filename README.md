@@ -6,6 +6,8 @@ create a base for react authentication.
 * mongodb & mongoose
 * passport.js (passport-local)
 
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
 Following vlad's authentication [blog](https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt)
 
 # setup
