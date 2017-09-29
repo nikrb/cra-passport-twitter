@@ -4,7 +4,6 @@ import './App.css';
 import HomePage from './containers/HomePage';
 import LoginPage from './containers/LoginPage';
 import SignupPage from './containers/SignupPage';
-import Profile from './containers/ProfilePage';
 import SettingsPage from './containers/SettingsPage';
 import Auth from './modules/Auth';
 
@@ -41,7 +40,6 @@ export default class App extends Component {
             <ul>
               <div className="nav-box">
                 <li><NavLink to="/" exact>Home</NavLink></li>
-                <li><NavLink to="/profile" exact>Profile</NavLink></li>
               </div>
               <div className="nav-box">
                 { Auth.isUserAuthenticated()?
@@ -66,7 +64,6 @@ export default class App extends Component {
             <Route path="/login" render={props=>
                 <LoginPage {...props} onLogin={this.login} />} />
             <Route path="/signup" component={SignupPage} />
-            <AuthRoute path="/profile" component={Profile} />
             <AuthRoute path="/settings" component={SettingsPage} />
             <Route path="*" render={props => <Redirect to='/' {...props} /> } />
           </Switch>
