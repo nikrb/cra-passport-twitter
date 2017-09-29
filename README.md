@@ -1,4 +1,4 @@
-create a base for react authentication.
+create a base for react authentication. [demo](https://knik-auth-react-base.herokuapp.com/)
 
 * node.js
 * react.js
