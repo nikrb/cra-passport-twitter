@@ -10,6 +10,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Following vlad's authentication [blog](https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt)
 
+Heroku deployment taken from mars [demo](https://github.com/mars/heroku-cra-node)
+with an updated version to show mongodb and websocket connection [here](https://github.com/nikrb/heroku-cra-node)
+
 # setup
 
 ### install mongo
@@ -25,18 +28,19 @@ jwtSecret=somesecretphrase
 ```
 2. npm install (top level and client dirs)
 3. startup mongo
-4. npm start
+4. npm run start-dev
 
-## production (cloud9)
-1. clone repo
-2. create .env file, e.g.
+
+## Deploy to Heroku
+
+Create a new mongodb on mLab.
+
+After creating the heroku app (```heroku create```) setup the environment using
+the heroku dashboard.
+
+```bash
+git clone https://github.com/nikrb/auth-react-base.git
+cd auth-react-base/
+heroku create
+git push heroku master
 ```
-dbUri=mongodb://localhost:27017/testdb
-jwtSecret=somesecretphrase
-NODE_ENV=production
-```
-3. npm install (top level and client dirs)
-4. cd client && npm run build
-5. cd ..
-6. start mongo
-7. node server
