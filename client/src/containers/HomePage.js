@@ -6,6 +6,9 @@ export default class HomePage extends React.Component {
       <div className="App">
         <h1>React Auth</h1>
         This is the home page
+        <div>
+          <a href="/apo/login" >Twitter Login</a>
+        </div>
       </div>
     );
   };
