@@ -19,7 +19,8 @@
     "mongoose": "^4.11.6",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "passport-twitter": "^1.0.4"
+    "passport-twitter": "^1.0.4",
+    "react-router-component": "^0.39.0"
   },
   "scripts": {
     "start": "node server",
