@@ -7,7 +7,7 @@ export default class HomePage extends React.Component {
         <h1>React Auth</h1>
         This is the home page
         <div>
-          <a href="/apo/login" >Twitter Login</a>
+          <a href="http://localhost:5000/apo/login" >Twitter Login</a>
         </div>
       </div>
     );
