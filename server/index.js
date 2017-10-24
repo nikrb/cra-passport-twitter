@@ -42,10 +42,8 @@ app.use(session({
 app.use( passport.initialize());
 app.use( passport.session());
 
-const twitter_strategy = require( './passport/twitter-login');
-passport.use( 'twitter', twitter_strategy);
+require( './passport/twitter-login')();
 
-console.log( "setting up router");
 const apo_routes = require( './routes/apo');
 app.use( "/apo", apo_routes);
 
