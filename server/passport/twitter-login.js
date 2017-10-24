@@ -1,10 +1,11 @@
 const passport = require('passport');
 const TwitterStrategy = require('passport-twitter').Strategy;
 const User = require('mongoose').model('User');
-    // config = require('../config');
 
 module.exports = function() {
-  const callback_url = "http://localhost:3000/callback";
+  const port = process.env.NODE_ENV === "production"?process.env.PORT:3000;
+  const trans = process.env.NODE_ENV === "production"?"https":"http";
+  const callback_url = `${trans}://localhost:${port}/callback`;
 
   passport.serializeUser(function(user, done) {
     return done(null, user.id);

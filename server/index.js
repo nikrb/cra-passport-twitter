@@ -1,6 +1,7 @@
 if( process.env.NODE_ENV !== 'production'){
   require( 'dotenv').config();
 }
+process.env.PORT = process.env.PORT || 5000;
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -11,8 +12,6 @@ const passport = require( 'passport');
 const mongoose_connection = require( './models').connect( process.env.dbUri);
 
 const app = express();
-
-const PORT = process.env.PORT || 5000;
 
 // Express only serves static assets in production
 // FIXME: catchall need to go at the bottom
@@ -62,6 +61,6 @@ app.use( "/apo", apo_routes);
 // app.use('/auth', authRoutes);
 // app.use('/api', apiRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Find the server at [${PORT}]`); // eslint-disable-line no-console
+app.listen( process.env.PORT, () => {
+  console.log(`Find the server at [${process.env.PORT}]`); // eslint-disable-line no-console
 });
