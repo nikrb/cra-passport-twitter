@@ -1,10 +1,7 @@
 const express = require('express');
+const passport = require( 'passport');
 
 const router = new express.Router();
-
-router.get( "/test", function( req, res){
-  res.send( {success:true, message:"test route"});
-});
 
 router.get( "/login", function(req, res, next) {
   console.log( "twitter login")
