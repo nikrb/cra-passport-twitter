@@ -15,6 +15,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Express only serves static assets in production
+// FIXME: catchall need to go at the bottom
 if (process.env.NODE_ENV === 'production') {
   console.log( "node env: production");
   app.use( '/', express.static('client/build'));
