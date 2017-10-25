@@ -5,7 +5,7 @@ const User = require('mongoose').model('User');
 module.exports = function() {
   const port = process.env.NODE_ENV === "production"?process.env.PORT:3000;
   const trans = process.env.NODE_ENV === "production"?"https":"http";
-  const callback_url = `${trans}://localhost:${port}/callback`;
+  const callback_url = `http://localhost:5000/apo/callback`;
 
   passport.serializeUser(function(user, done) {
     return done(null, user.id);
