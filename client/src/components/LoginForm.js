@@ -21,7 +21,7 @@ export default class LoginForm extends React.Component {
       <div className="container" >
         <h2>Login</h2>
         <div className="link-btn">
-          <a style={nodec} href="http://localhost:5000/apo/login" >Login with Twitter</a>
+          <a style={nodec} rel="external" href="http://localhost:5000/apo/login" >Login with Twitter</a>
         </div>
         <div style={spacer}>
           <form action="/" onSubmit={onSubmit} >
