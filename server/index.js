@@ -1,6 +1,6 @@
-if( process.env.NODE_ENV !== 'production'){
+// if( process.env.NODE_ENV !== 'production'){
   require( 'dotenv').config();
-}
+// }
 process.env.PORT = process.env.PORT || 5000;
 
 const express = require('express');
@@ -12,22 +12,6 @@ const passport = require( 'passport');
 const mongoose_connection = require( './models').connect( process.env.dbUri);
 
 const app = express();
-
-// Express only serves static assets in production
-// FIXME: catchall need to go at the bottom
-if (process.env.NODE_ENV === 'production') {
-  console.log( "node env: production");
-  app.use( '/', express.static('client/build'));
-
-  app.get('/', function (req, res) {
-    res.sendFile( 'client/build/index.html');
-  });
-  // app.get('/*', function (req, res) {
-  //   res.sendFile( 'client/build/index.html');
-  // });
-} else {
-  console.log( "node env: development");
-}
 
 app.use( bodyParser.json());
 app.use( bodyParser.urlencoded({ extended: false }));
@@ -60,6 +44,22 @@ app.use( "/apo", apo_routes);
 // const apiRoutes = require('./routes/api');
 // app.use('/auth', authRoutes);
 // app.use('/api', apiRoutes);
+
+// Express only serves static assets in production
+// FIXME: catchall need to go at the bottom
+app.use( '/', express.static('client/build'));
+if (process.env.NODE_ENV === 'production') {
+  console.log( "node env: production");
+
+  app.get('/', function (req, res) {
+    res.sendFile( 'client/build/index.html');
+  });
+  // app.get('/*', function (req, res) {
+  //   res.sendFile( 'client/build/index.html');
+  // });
+} else {
+  console.log( "node env: development");
+}
 
 app.listen( process.env.PORT, () => {
   console.log(`Find the server at [${process.env.PORT}]`); // eslint-disable-line no-console
