@@ -3,10 +3,10 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 const User = require('mongoose').model('User');
 
 module.exports = function() {
-  const port = process.env.NODE_ENV === "production"?process.env.PORT:3000;
-  const trans = process.env.NODE_ENV === "production"?"https":"http";
-  const callback_url = `http://localhost:5000/apo/callback`;
-
+  const base = process.env.NODE_ENV === "production"
+    ? process.env.PROD_BASE_URL
+    :`http://localhost:5000`;
+  const callback_url = `${base}/apo/callback`;
   passport.serializeUser(function(user, done) {
     return done(null, user.id);
   });
@@ -21,13 +21,15 @@ module.exports = function() {
     consumerKey: process.env.CONSUMER_KEY, // config.twitter.consumerKey,
     consumerSecret: process.env.CONSUMER_SECRET, // config.twitter.consumerSecret,
     callbackURL: callback_url // config.twitter.callbackURL
-  }, function(accessToken, refreshToken, profile, done) {
+  },
+  function(accessToken, refreshToken, profile, done) {
     var searchQuery = {
       twitterId: profile.id
     };
     var update = {
       twitterId: profile.id,
-      name: profile.displayName
+      name: profile.displayName,
+      email:profile.email
     };
     var updateOptions = {
       upsert: true
