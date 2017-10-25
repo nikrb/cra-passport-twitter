@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
   },
   password: String,
   name: String,
-  twitter_id: Number
+  twitterId: Number
 });
 
 
