@@ -47,10 +47,10 @@ app.use( "/apo", apo_routes);
 
 // Express only serves static assets in production
 // FIXME: catchall need to go at the bottom
-app.use( '/', express.static('client/build'));
 if (process.env.NODE_ENV === 'production') {
   console.log( "node env: production");
 
+  app.use( '/', express.static('client/build'));
   app.get('/', function (req, res) {
     res.sendFile( 'client/build/index.html');
   });
