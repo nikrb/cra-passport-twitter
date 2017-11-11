@@ -6,6 +6,7 @@ import LoginPage from './containers/LoginPage';
 import SignupPage from './containers/SignupPage';
 import SettingsPage from './containers/SettingsPage';
 import Auth from './modules/Auth';
+import {checkStatus, parseJSON} from './modules/util';
 
 export default class App extends Component {
   state = {
@@ -13,6 +14,12 @@ export default class App extends Component {
     user : {name:"", email:""}
   };
   componentWillMount = () => {
+    fetch( "/apo/user")
+    .then( checkStatus)
+    .then( parseJSON)
+    .then( (response) => {
+      console.log( "/apo/user response:", response);
+    });
     if( Auth.isUserAuthenticated()){
       const username = Auth.getUsername();
       const email = Auth.getEmail();

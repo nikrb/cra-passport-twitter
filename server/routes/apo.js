@@ -18,4 +18,9 @@ router.get( "/callback", function(req, res, next) {
   })(req, res, next);
 });
 
+router.get( "/user", function( req, res){
+  console.log( "/apo/user :", req.user);
+  res.send( req.user);
+});
+
 module.exports = router;
