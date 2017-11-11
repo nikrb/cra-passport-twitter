@@ -3,15 +3,17 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 const User = require('mongoose').model('User');
 
 module.exports = function() {
-  const base = process.env.NODE_ENV === "production"
-    ? process.env.PROD_BASE_URL
-    :`http://localhost:5000`;
-  const callback_url = `${base}/apo/callback`;
+  // const base = process.env.NODE_ENV === "production"
+  //   ? process.env.PROD_BASE_URL
+  //   :`http://localhost:5000`;
+  const callback_url = "/apo/callback"; // `${base}/apo/callback`;
+
   passport.serializeUser(function(user, done) {
     return done(null, user.id);
   });
 
   passport.deserializeUser(function(userId, done) {
+    console.log( "passport deserializeUser id:", userId);
     User.findById(userId, function(err, user) {
       return done(err, user);
     })

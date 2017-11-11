@@ -23,42 +23,36 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose_connection })
 }));
 
+app.use(function(req, res, next){
+  console.log( `request: protocol [${req.protocol}] host [${req.hostname}]
+    url [${req.url}]`);
+  next();
+});
+
 app.use( passport.initialize());
 app.use( passport.session());
 
 require( './passport/twitter-login')();
 
+app.use(function(req, res, next){
+  if( req.user){
+    console.log( `request user [${req.user.name}]`);
+  } else {
+    console.log( "request user is undefined");
+  }
+  next();
+});
+
 const apo_routes = require( './routes/apo');
 app.use( "/apo", apo_routes);
 
 
-// const localSignupStrategy = require('./passport/local-signup');
-// const localLoginStrategy = require('./passport/local-login');
-// passport.use('local-signup', localSignupStrategy);
-// passport.use('local-login', localLoginStrategy);
-//
-// const authCheckMiddleware = require('./middleware/auth-check');
-// app.use('/api', authCheckMiddleware);
-
-// const authRoutes = require('./routes/auth');
-// const apiRoutes = require('./routes/api');
-// app.use('/auth', authRoutes);
-// app.use('/api', apiRoutes);
-
-// Express only serves static assets in production
-// FIXME: catchall need to go at the bottom
 if (process.env.NODE_ENV === 'production') {
-  console.log( "node env: production");
+  app.use( '/', express.static( 'client/build'));
 
-  app.use( '/', express.static('client/build'));
-  app.get('/', function (req, res) {
-    res.sendFile( 'client/build/index.html');
+  app.get('/*', function (req, res) {
+    res.sendFile( 'index.html');
   });
-  // app.get('/*', function (req, res) {
-  //   res.sendFile( 'client/build/index.html');
-  // });
-} else {
-  console.log( "node env: development");
 }
 
 app.listen( process.env.PORT, () => {

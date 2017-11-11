@@ -9,18 +9,19 @@ router.get( "/login", function(req, res, next) {
 });
 router.get( "/callback", function(req, res, next) {
   console.log( "twitter callback:", process.env.NODE_ENV);
-  const redir = process.env.NODE_ENV==="production"
-    ?process.env.PROD_BASE_URL:"http://localhost:3000";
-  console.log( "redir url:", redir);
   return passport.authenticate('twitter', {
-    successRedirect: redir,
-    failureRedirect: redir
+    successRedirect: "/",
+    failureRedirect: "/"
   })(req, res, next);
 });
 
 router.get( "/user", function( req, res){
   console.log( "/apo/user :", req.user);
-  res.send( req.user);
+  if( req.user){
+    res.send( req.user);
+  } else {
+    res.send( {success:false, message: "user not authed"});
+  }
 });
 
 module.exports = router;
