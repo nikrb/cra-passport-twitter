@@ -8,6 +8,7 @@ Note we're running in production mode (one server), there is no dev mode.
   * `git clone https://github.com/nikrb/cra-passport-twitter.git`
   * `cd cra-passport-twitter`
   * `git checkout local-prod-test`
+2. run mongo locally
 2. copy .env.sample to .env (optionally provide your own mongo/twitter app credentials)
   * `cp .env.sample .env`
 3. install client packages
