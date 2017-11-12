@@ -5,18 +5,6 @@ import HomePage from './containers/HomePage';
 import {checkStatus, parseJSON} from './modules/util';
 
 export default class App extends Component {
-  componentWillMount = () => {
-    fetch( "/apo/user")
-    .then( checkStatus)
-    .then( parseJSON)
-    .then( (response) => {
-      console.log( "/apo/user response:", response);
-    })
-    .catch( (err) => {
-      console.log( "/apo/user failed:", err);
-    });
-  };
-
   render() {
     const right_margin = {
       marginRight: "10px"
