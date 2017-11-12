@@ -3,6 +3,7 @@ test branch to demonstrate wrong session.
 Note we're running in production mode (one server), there is no dev mode.
 
 # setup
+Make sure you have mongo running locally.
 
 1. clone repo and switch to local-prod-test branch
   * `git clone https://github.com/nikrb/cra-passport-twitter.git`
