@@ -1,3 +1,36 @@
+test branch to demonstrate wrong session.
+
+Note we're running in production mode (one server), there is no dev mode.
+
+# setup
+
+1. clone repo and switch to local-prod-test branch
+  * `git clone https://github.com/nikrb/cra-passport-twitter.git`
+  * `cd cra-passport-twitter`
+  * `git checkout local-prod-test`
+2. copy .env.sample to .env (optionally provide your own mongo/twitter app credentials)
+  * `cp .env.sample .env`
+3. install client packages
+  * `cd client`
+  * `yarn` or `npm install`
+4. install server packages (if install fails on node pre gyp, workaround is to install node-gyp first)
+  * `cd ..`
+  * `yarn` or `npm install`
+5. build client
+  * `cd client`
+  * `yarn build` or `npm build`
+6. run server
+  * `cd ..`
+  * `node server`
+7. browse to localhost:5000
+
+## view problem
+1. click twitter login
+2. authorize app
+3. click authed? button
+  * console displays user not authenticated
+
+# Overview
 This repo is a work in progress.
 Uses [base template](https://github.com/nikrb/auth-react-base)
 and adds in twitter auth using passport.
