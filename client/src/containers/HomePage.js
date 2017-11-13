@@ -3,7 +3,15 @@ import {checkStatus, parseJSON} from '../modules/util';
 
 export default class HomePage extends React.Component {
   authClick = () => {
-    fetch( "/apo/user")
+    fetch( "/apo/user",{
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Cache': 'no-cache'
+      },
+      credentials: 'same-origin'
+    })
     .then( checkStatus)
     .then( parseJSON)
     .then( (response) => {
